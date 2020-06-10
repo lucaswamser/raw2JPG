@@ -12,11 +12,13 @@ raw file
         fr.onload = function () {
             var data = fr.result;
             var array = new Int8Array(data);
-            var blob = new Blob( [  raw2JPG.convert(array) ], { type: "image/jpeg" } );
-            let imageDomElement = document.getElementById("image")
+            raw2JPG.convert(array).then(converted => {
+                var blob = new Blob([converted], { type: "image/jpeg" });
+                let imageDomElement = document.getElementById("image")
 
-            imageDomElement.src = window.URL.createObjectURL(blob)
-            imageDomElement.style = ""
+                imageDomElement.src = window.URL.createObjectURL(blob)
+                imageDomElement.style = ""
+            })
         };
         fr.readAsArrayBuffer(filesElement.files[0]);
     })
